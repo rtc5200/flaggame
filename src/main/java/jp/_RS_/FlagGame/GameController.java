@@ -11,6 +11,7 @@ import org.bukkit.scoreboard.Team;
 
 import jp._RS_.FlagGame.Config.ConfigHandler;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
+import jp._RS_.FlagGame.Scoreboard.ScoreCheckTask;
 import jp._RS_.FlagGame.Scoreboard.TeamSeparator;
 import jp._RS_.FlagGame.Scoreboard.TeamTeleporter;
 import jp._RS_.FlagGame.Timer.CountDown;
@@ -21,6 +22,7 @@ public class GameController {
 	private ConfigHandler config;
 	private GameStatus status = GameStatus.READY;
 	private CountDown count;
+	private ScoreCheckTask task;
 	public GameController(Main main) {
 		this.main = main;
 		manager = main.getSbManager();
@@ -47,6 +49,9 @@ public class GameController {
 		count = new CountDown(config.getGameTime(),main);
 		count.start();
 		main.getServer().broadcastMessage(ChatColor.GREEN + "ゲーム開始です!");
+		task = new ScoreCheckTask(main);
+		Bukkit.getScheduler().runTaskTimer(main,task, 20, 20);
+		task.setCancelled(false);
 	}
 	public void exit()
 	{

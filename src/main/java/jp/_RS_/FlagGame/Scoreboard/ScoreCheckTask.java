@@ -11,7 +11,7 @@ public class ScoreCheckTask extends BukkitRunnable{
 	private Main main;
 	private FlagConfigHandler config;
 	private ScoreManager manager;
-	private boolean canceled = false;
+	private boolean canceled = true;
 	public ScoreCheckTask(Main main) {
 		this.main = main;
 		this.config = main.getConfigHandler().getFlagConfig();
