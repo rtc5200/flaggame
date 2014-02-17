@@ -49,7 +49,7 @@ public class SbManager {
 		blue.setPrefix(ChatColor.BLUE.toString());
 		red.setSuffix(ChatColor.RESET.toString());
 		blue.setSuffix(ChatColor.RESET.toString());
-		smanager = new ScoreManager(this);
+		smanager = new ScoreManager(main,this);
 	}
 	public ScoreManager getScoreManager()
 	{

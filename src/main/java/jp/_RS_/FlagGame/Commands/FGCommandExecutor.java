@@ -42,6 +42,11 @@ public class FGCommandExecutor implements CommandExecutor {
 			new Command_Start(main,sender,args);
 			return true;
 		}
+		if(args[0].equalsIgnoreCase("af"))
+		{
+			new Command_AddFlag(main,sender,args);
+			return true;
+		}
 		return false;
 	}
 	/*private boolean canExecute(CommandSender sender,String permission)

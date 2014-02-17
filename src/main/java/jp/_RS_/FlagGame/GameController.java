@@ -15,6 +15,7 @@ import jp._RS_.FlagGame.Scoreboard.ScoreCheckTask;
 import jp._RS_.FlagGame.Scoreboard.TeamSeparator;
 import jp._RS_.FlagGame.Scoreboard.TeamTeleporter;
 import jp._RS_.FlagGame.Timer.CountDown;
+import jp._RS_.FlagGame.Variables.MessageVariables;
 
 public class GameController {
 	private Main main;
@@ -55,7 +56,29 @@ public class GameController {
 	}
 	public void exit()
 	{
-		
+		count.setCancelled(true);
+		task.setCancelled(true);
+		int reds = manager.getScoreManager().RedTeam_getScore();
+		int blues = manager.getScoreManager().BlueTeam_getScore();
+		if(reds > blues)
+		{
+			main.getServer().broadcastMessage(MessageVariables.Red + "チームの勝利!");
+			//赤勝ち
+		}else if (reds < blues)
+		{
+			main.getServer().broadcastMessage(MessageVariables.Blue + "チームの勝利!");
+			//青勝ち
+		}else{
+			main.getServer().broadcastMessage("引き分け!");
+			//引き分け
+		}
+		manager.ClearMembers();
+		for(Player p : Bukkit.getOnlinePlayers())
+		{
+			p.teleport(p.getWorld().getSpawnLocation());
+		}
+		manager.getScoreManager().resetScores();
+		status = GameStatus.READY;
 	}
 	public GameStatus getStatus()
 	{

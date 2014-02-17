@@ -1,5 +1,7 @@
 package jp._RS_.FlagGame.Scoreboard;
 
+import jp._RS_.FlagGame.Main;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -8,22 +10,25 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 public class ScoreManager {
+	private Main main;
 	private SbManager manager;
 	private Scoreboard sb;
 	private Objective ob;
 	private OfflinePlayer reds;
 	private OfflinePlayer blues;
-	public ScoreManager(SbManager manager) {
+	public ScoreManager(Main main,SbManager manager) {
 		this.manager = manager;
+		this.main = main;
 		sb = manager.getScoreboard();
+		register();
 	}
-	public void register()
+	private void register()
 	{
-		ob = sb.registerNewObjective("チームスコア", "dummy");
+		ob = sb.registerNewObjective("TeamScore", "dummy");
 		ob.setDisplaySlot(DisplaySlot.SIDEBAR);
 		ob.setDisplayName("チームスコア");
-		reds = Bukkit.getOfflinePlayer(ChatColor.RED + "赤");
-		blues = Bukkit.getOfflinePlayer(ChatColor.BLUE + "青");
+		reds = main.getServer().getOfflinePlayer(ChatColor.RED + "赤");
+		blues = main.getServer().getOfflinePlayer(ChatColor.BLUE + "青");
 		ob.getScore(reds).setScore(0);
 		ob.getScore(blues).setScore(0);
 	}

@@ -27,12 +27,16 @@ public class ScoreCheckTask extends BukkitRunnable{
 		{
 			for(Location l : config.getFlagLocation())
 			{
-				if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 11)
+				if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 14)
 				{
 					manager.RedTeam_AddScore(10);
-				}else if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 14)
+				}else if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 11)
 				{
 					manager.BlueTeam_AddScore(10);
+				}
+				if(manager.RedTeam_getScore() > 50 || manager.BlueTeam_getScore() > 50)
+				{
+					main.getController().exit();
 				}
 			}
 		}

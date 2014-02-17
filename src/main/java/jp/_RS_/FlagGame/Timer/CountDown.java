@@ -1,6 +1,8 @@
 package jp._RS_.FlagGame.Timer;
 
 
+import jp._RS_.FlagGame.Main;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -8,9 +10,9 @@ import org.bukkit.plugin.Plugin;
 public class CountDown{
 	protected long time;
 	protected boolean canceled = false;
-	protected Plugin plugin;
+	protected Main plugin;
 	protected CountDown cd = this;
-	public CountDown(long time, Plugin plugin){
+	public CountDown(long time, Main plugin){
 		this.time = time;
 		this.plugin = plugin;
 	}
@@ -26,13 +28,15 @@ public class CountDown{
 		
 		public void run(){
 			if(time <= 0 && !canceled){
-				canceled = true;
+				
 				for(Player p : Bukkit.getOnlinePlayers())
 				{
 					p.setLevel(0);
 					p.setExp(0);
 				}
+				plugin.getController().exit();
 				//カウントダウン終了
+				canceled = true;
 			}
 			if(!canceled){
 				time--;
