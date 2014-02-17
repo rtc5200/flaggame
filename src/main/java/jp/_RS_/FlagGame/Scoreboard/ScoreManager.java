@@ -27,5 +27,28 @@ public class ScoreManager {
 		ob.getScore(reds).setScore(0);
 		ob.getScore(blues).setScore(0);
 	}
+	public void RedTeam_AddScore(int s)
+	{
+		int i = ob.getScore(reds).getScore();
+		ob.getScore(reds).setScore(i + s);
+	}
+	public void BlueTeam_AddScore(int s)
+	{
+		int i = ob.getScore(blues).getScore();
+		ob.getScore(blues).setScore(i + s);
+	}
+	public void resetScores()
+	{
+		ob.getScore(reds).setScore(0);
+		ob.getScore(blues).setScore(0);
+	}
+	public Integer RedTeam_getScore()
+	{
+		return ob.getScore(reds).getScore();
+	}
+	public Integer BlueTeam_getScore()
+	{
+		return ob.getScore(blues).getScore();
+	}
 
 }

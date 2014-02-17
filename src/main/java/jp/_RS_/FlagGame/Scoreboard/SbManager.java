@@ -51,7 +51,10 @@ public class SbManager {
 		blue.setSuffix(ChatColor.RESET.toString());
 		smanager = new ScoreManager(this);
 	}
-	
+	public ScoreManager getScoreManager()
+	{
+		return smanager;
+	}
 	public Scoreboard getScoreboard()
 	{
 		return sb;
