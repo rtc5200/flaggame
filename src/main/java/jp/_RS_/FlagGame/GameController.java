@@ -32,17 +32,7 @@ public class GameController {
 	public void start()
 	{
 		status = GameStatus.STARTED;
-		HashMap<Player,Team> temp = new TeamSeparator(manager.getRed(),manager.getBlue()).separate(Bukkit.getOnlinePlayers());
-		for(Player p : temp.keySet())
-		{
-			if(temp.get(p).equals(manager.getRed()))
-			{
-				manager.JoinRedTeam(p);
-			}else{
-				manager.JoinBlueTeam(p);
-			}
-			p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 100);
-		}
+		new TeamSeparator(manager).separate(Bukkit.getOnlinePlayers());
 		Location rrespawn = config.getRedTeamConfig().getRespawnPoint();
 		Location brespawn = config.getBlueTeamConfig().getRespawnPoint();
 		new TeamTeleporter(manager.getRed()).Teleport(rrespawn);
