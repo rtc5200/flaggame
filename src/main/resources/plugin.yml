@@ -1,0 +1,7 @@
+name: FlagGame
+version: 0.1
+main: jp._RS_.FlagGame.Main
+commands:
+  fg:
+    description: Commands for FlagGame
+    usage: /<command> [args]..
