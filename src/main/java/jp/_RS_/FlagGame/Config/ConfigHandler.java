@@ -15,6 +15,8 @@ public class ConfigHandler {
 	private FlagConfigHandler fconfig;
 	private Main main;
 	private Long time;
+	private Integer obgp;
+	private Integer op;
 	public ConfigHandler(Main main) {
 		this.main = main;
 		new FileHelper(main.getLogger(),main.getDataFolder());
@@ -23,6 +25,8 @@ public class ConfigHandler {
 		btconfig = TeamConfigHandler.load(ConfigVariables.BlueTeamConfigFile(main.getDataFolder()));
 		fconfig = FlagConfigHandler.load(ConfigVariables.FlagConfigFile(main.getDataFolder()));
 		mconfig.addDefault("GameTime", 90L);
+		mconfig.addDefault("ObjectivePoint:", 100);
+		mconfig.addDefault("OccupyIncreasePointRate", 10);
 		mconfig.options().copyDefaults(true);
 		try {
 			mconfig.save(new File(main.getDataFolder(),"config.yml"));
@@ -30,6 +34,9 @@ public class ConfigHandler {
 			e.printStackTrace();
 		}
 		time = mconfig.getLong("GameTime");
+		obgp = mconfig.getInt("ObjectivePoint:");
+		op = mconfig.getInt("OccupyIncreasePointRate");
+		
 	}
 	public TeamConfigHandler getRedTeamConfig()
 	{
@@ -46,6 +53,14 @@ public class ConfigHandler {
 	public Long getGameTime()
 	{
 		return time;
+	}
+	public Integer getObjectivePoint()
+	{
+		return obgp;
+	}
+	public Integer getRate()
+	{
+		return op;
 	}
 
 }
