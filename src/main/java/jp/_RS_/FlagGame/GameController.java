@@ -1,14 +1,5 @@
 package jp._RS_.FlagGame;
 
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
-
 import jp._RS_.FlagGame.Config.ConfigHandler;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
 import jp._RS_.FlagGame.Scoreboard.ScoreCheckTask;
@@ -16,6 +7,12 @@ import jp._RS_.FlagGame.Scoreboard.TeamSeparator;
 import jp._RS_.FlagGame.Scoreboard.TeamTeleporter;
 import jp._RS_.FlagGame.Timer.CountDown;
 import jp._RS_.FlagGame.Variables.MessageVariables;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class GameController {
 	private Main main;
@@ -31,18 +28,30 @@ public class GameController {
 	}
 	public void start()
 	{
-		status = GameStatus.STARTED;
-		new TeamSeparator(manager).separate(Bukkit.getOnlinePlayers());
-		Location rrespawn = config.getRedTeamConfig().getRespawnPoint();
-		Location brespawn = config.getBlueTeamConfig().getRespawnPoint();
-		new TeamTeleporter(manager.getRed()).Teleport(rrespawn);
-		new TeamTeleporter(manager.getBlue()).Teleport(brespawn);
+		
+		BukkitScheduler s = main.getServer().getScheduler();
+		main.getServer().broadcastMessage(ChatColor.GREEN + "チーム分け準備中です.....");
+		s.runTaskLater(main,new Runnable(){
+			@Override
+			public void run() {
+				new TeamSeparator(manager).separate(Bukkit.getOnlinePlayers());
+				Location rrespawn = config.getRedTeamConfig().getRespawnPoint();
+				Location brespawn = config.getBlueTeamConfig().getRespawnPoint();
+				new TeamTeleporter(manager.getRed()).Teleport(rrespawn);
+				new TeamTeleporter(manager.getBlue()).Teleport(brespawn);
+				main.getServer().broadcastMessage(ChatColor.GREEN + "チーム分け完了しました!");
+				status = GameStatus.WAIT;
+			}
+		},20);
 		count = new CountDown(config.getGameTime(),main);
 		count.start();
 		main.getServer().broadcastMessage(ChatColor.GREEN + "ゲーム開始です!");
+		main.getServer().broadcastMessage(ChatColor.GREEN + "目標チーム合計スコアは" +ChatColor.AQUA + config.getObjectivePoint() + 
+				ChatColor.GREEN + "です。");
 		task = new ScoreCheckTask(main);
 		Bukkit.getScheduler().runTaskTimer(main,task, 20, 20);
 		task.setCancelled(false);
+		status = GameStatus.INGAME;
 	}
 	public void exit()
 	{

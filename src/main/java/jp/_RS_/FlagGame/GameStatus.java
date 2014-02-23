@@ -1,5 +1,5 @@
 package jp._RS_.FlagGame;
 
 public enum GameStatus {
-	READY,STARTED
+	READY,WAIT,INGAME
 }

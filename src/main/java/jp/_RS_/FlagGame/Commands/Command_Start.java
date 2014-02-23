@@ -30,7 +30,7 @@ public class Command_Start implements CommandBase{
 			sender.sendMessage(MessageVariables.NotHavePermission);
 			return;
 		}
-		if(controller.getStatus().equals(GameStatus.STARTED))
+		if(!controller.getStatus().equals(GameStatus.READY))
 		{
 			sender.sendMessage("ゲームはすでに開始されています。");
 			return;
@@ -40,7 +40,7 @@ public class Command_Start implements CommandBase{
 
 	@Override
 	public void PerformFromCommandBlock(CommandSender sender, String[] args) {
-		if(controller.getStatus().equals(GameStatus.STARTED))
+		if(!controller.getStatus().equals(GameStatus.READY))
 		{
 			return;
 		}

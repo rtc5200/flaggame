@@ -26,7 +26,7 @@ public class FlagEvents implements Listener{
 		Player p = e.getPlayer();
 		if(main.getConfigHandler().getFlagConfig().isFlag(b))
 		{
-			if(main.getController().getStatus().equals(GameStatus.STARTED))
+			if(main.getController().getStatus().equals(GameStatus.INGAME))
 			{
 				if(main.getSbManager().isRedTeam(p))
 				{

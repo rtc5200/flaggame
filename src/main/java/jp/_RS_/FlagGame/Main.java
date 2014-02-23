@@ -7,6 +7,7 @@ import jp._RS_.FlagGame.Config.ConfigHandler;
 import jp._RS_.FlagGame.Events.ChatEvent;
 import jp._RS_.FlagGame.Events.FlagEvents;
 import jp._RS_.FlagGame.Events.JoinEvent;
+import jp._RS_.FlagGame.Events.Waiting;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
 
 import org.bukkit.Bukkit;
@@ -44,6 +45,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new JoinEvent(this), this);
 		getServer().getPluginManager().registerEvents(new ChatEvent(this), this);
 		getServer().getPluginManager().registerEvents(new FlagEvents(this), this);
+		getServer().getPluginManager().registerEvents(new Waiting(this), this);
 	}
 	public SbManager getSbManager()
 	{
