@@ -33,9 +33,11 @@ public class ScoreCheckTask extends BukkitRunnable{
 				if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 14)
 				{
 					manager.RedTeam_AddScore(config.getRate());
+					main.getBarManager().updateBar();
 				}else if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 11)
 				{
 					manager.BlueTeam_AddScore(config.getRate());
+					main.getBarManager().updateBar();
 				}
 				if(manager.RedTeam_getScore() > config.getObjectivePoint() || manager.BlueTeam_getScore() > config.getObjectivePoint())
 				{

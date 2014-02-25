@@ -1,6 +1,8 @@
 package jp._RS_.FlagGame;
 
 import jp._RS_.FlagGame.Config.ConfigHandler;
+import jp._RS_.FlagGame.Scoreboard.BarManager;
+import jp._RS_.FlagGame.Scoreboard.FlagManager;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
 import jp._RS_.FlagGame.Scoreboard.ScoreCheckTask;
 import jp._RS_.FlagGame.Scoreboard.TeamSeparator;
@@ -21,14 +23,17 @@ public class GameController {
 	private GameStatus status = GameStatus.READY;
 	private CountDown count;
 	private ScoreCheckTask task;
+	private FlagManager fmanager;
 	public GameController(Main main) {
 		this.main = main;
 		manager = main.getSbManager();
 		config = main.getConfigHandler();
+		fmanager = new FlagManager(main);
 	}
 	public void start()
 	{
-		
+		manager.getScoreManager().resetScores();
+		status = GameStatus.WAIT;
 		BukkitScheduler s = main.getServer().getScheduler();
 		main.getServer().broadcastMessage(ChatColor.GREEN + "チーム分け準備中です.....");
 		s.runTaskLater(main,new Runnable(){
@@ -40,18 +45,19 @@ public class GameController {
 				new TeamTeleporter(manager.getRed()).Teleport(rrespawn);
 				new TeamTeleporter(manager.getBlue()).Teleport(brespawn);
 				main.getServer().broadcastMessage(ChatColor.GREEN + "チーム分け完了しました!");
-				status = GameStatus.WAIT;
+				
+				count = new CountDown(config.getGameTime(),main);
+				main.getServer().broadcastMessage(ChatColor.GREEN + "ゲーム開始です!");
+				main.getServer().broadcastMessage(ChatColor.GREEN + "目標チーム合計スコアは" +ChatColor.AQUA + config.getObjectivePoint() + 
+						ChatColor.GREEN + "です。");
+				count.start();
+				task = new ScoreCheckTask(main);
+				task.setCancelled(false);
+				main.getServer().getScheduler().runTaskTimer(main,task, 20, 20);
+				status = GameStatus.INGAME;
+				main.getBarManager().updateBar();
 			}
 		},20);
-		count = new CountDown(config.getGameTime(),main);
-		count.start();
-		main.getServer().broadcastMessage(ChatColor.GREEN + "ゲーム開始です!");
-		main.getServer().broadcastMessage(ChatColor.GREEN + "目標チーム合計スコアは" +ChatColor.AQUA + config.getObjectivePoint() + 
-				ChatColor.GREEN + "です。");
-		task = new ScoreCheckTask(main);
-		Bukkit.getScheduler().runTaskTimer(main,task, 20, 20);
-		task.setCancelled(false);
-		status = GameStatus.INGAME;
 	}
 	public void exit()
 	{
@@ -76,12 +82,15 @@ public class GameController {
 		{
 			p.teleport(p.getWorld().getSpawnLocation());
 		}
-		manager.getScoreManager().resetScores();
+		main.getBarManager().removeAll();
 		status = GameStatus.READY;
 	}
 	public GameStatus getStatus()
 	{
 		return status;
 	}
-
+	public FlagManager getFlagManager()
+	{
+		return fmanager;
+	}
 }

@@ -56,6 +56,10 @@ public class FlagConfigHandler {
 		if(points.contains(loc))return true;
 		return false;
 	}
+	public int getAmount()
+	{
+		return points.size();
+	}
 	public boolean isFlag(Block b)
 	{
 		if(points.contains(b.getLocation())&&b.getType().equals(Material.WOOL))

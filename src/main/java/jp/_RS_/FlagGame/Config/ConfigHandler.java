@@ -25,7 +25,7 @@ public class ConfigHandler {
 		btconfig = TeamConfigHandler.load(ConfigVariables.BlueTeamConfigFile(main.getDataFolder()));
 		fconfig = FlagConfigHandler.load(ConfigVariables.FlagConfigFile(main.getDataFolder()));
 		mconfig.addDefault("GameTime", 90L);
-		mconfig.addDefault("ObjectivePoint:", 100);
+		mconfig.addDefault("ObjectivePoint", 100);
 		mconfig.addDefault("OccupyIncreasePointRate", 10);
 		mconfig.options().copyDefaults(true);
 		try {
@@ -34,7 +34,7 @@ public class ConfigHandler {
 			e.printStackTrace();
 		}
 		time = mconfig.getLong("GameTime");
-		obgp = mconfig.getInt("ObjectivePoint:");
+		obgp = mconfig.getInt("ObjectivePoint");
 		op = mconfig.getInt("OccupyIncreasePointRate");
 		
 	}
