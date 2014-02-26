@@ -1,6 +1,7 @@
 package jp._RS_.FlagGame.Commands;
 
 import jp._RS_.FlagGame.Variables.MessageVariables;
+
 import org.bukkit.command.CommandSender;
 
 public abstract class CommandBase implements CommandBase_Methods{

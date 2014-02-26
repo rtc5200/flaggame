@@ -26,7 +26,7 @@ public class Command_AddFlag extends CommandBase{
 	@Override
 	public void PerformFromPlayer(CommandSender sender, String[] args) {
 		Player p = (Player)sender;
-		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Join))
+		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_AddFlag))
 		{
 			rejectExecute(sender,RejectReason.NotHavePermission);
 			return;

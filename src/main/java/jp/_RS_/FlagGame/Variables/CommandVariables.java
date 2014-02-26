@@ -5,4 +5,6 @@ public class CommandVariables {
 	public static String Permission_Quit = "fg.quit";
 	public static String Permission_Teleport = "fg.tele";
 	public static String Permission_SetRespawnPoint = "fg.setrp";
+	public static String Permission_Help = "fg.help";
+	public static String Permission_AddFlag = "fg.af";
 }
