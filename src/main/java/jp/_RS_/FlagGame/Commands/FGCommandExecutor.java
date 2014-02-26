@@ -22,34 +22,29 @@ public class FGCommandExecutor implements CommandExecutor {
 		{
 			new Command_Join(main,sender,args);
 			return true;
-		}
-		if(args[0].equalsIgnoreCase("quit"))
+		}else if(args[0].equalsIgnoreCase("quit"))
 		{
 			new Command_Quit(main,sender,args);
 			return true;
-		}
-		if(args[0].equalsIgnoreCase("tele"))
+		}else if(args[0].equalsIgnoreCase("tele"))
 		{
 			new Command_Teleport(main,sender,args);
 			return true;
-		}
-		if(args[0].equalsIgnoreCase("setrp"))
+		}else if(args[0].equalsIgnoreCase("setrp"))
 		{
 			new Command_SetRespawnPoint(main,sender,args);
 			return true;
-		}if(args[0].equalsIgnoreCase("start"))
+		}else if(args[0].equalsIgnoreCase("start"))
 		{
 			new Command_Start(main,sender,args);
 			return true;
-		}
-		if(args[0].equalsIgnoreCase("af"))
+		}else if(args[0].equalsIgnoreCase("af"))
 		{
 			new Command_AddFlag(main,sender,args);
 			return true;
-		}
-		if(args[0].equalsIgnoreCase("help"))
+		}else if(args[0].equalsIgnoreCase("help"))
 		{
-			new Command_Help();
+			new Command_Help(sender,args);
 			return true;
 		}
 		return false;

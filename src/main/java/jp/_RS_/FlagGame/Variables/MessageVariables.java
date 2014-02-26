@@ -26,7 +26,6 @@ public class MessageVariables {
 		result.add("/fg tele <x,y,z> [red/blue]     -    赤/青チームメンバーを指定座標へテレポートします。");
 		result.add("/fg setrp [red/blue]                 -    自分のいる場所を赤/青チームのリスポーンポイントに設定します。");
 		result.add("/fg af                                         -    自分のいる場所のブロックをフラッグとして追加します。");
-		
 		return result;
 	}
 	//-------
