@@ -11,7 +11,7 @@ import jp._RS_.FlagGame.Config.TeamConfigHandler;
 import jp._RS_.FlagGame.Variables.CommandVariables;
 import jp._RS_.FlagGame.Variables.MessageVariables;
 
-public class Command_SetRespawnPoint implements CommandBase {
+public class Command_SetRespawnPoint extends CommandBase {
 	private CommandSender sender;
 	private String[] args;
 	private Main main;
@@ -35,12 +35,12 @@ public class Command_SetRespawnPoint implements CommandBase {
 		Player p = (Player)sender;
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_SetRespawnPoint))
 		{
-			sender.sendMessage(MessageVariables.NotHavePermission);
+			rejectExecute(sender,RejectReason.NotHavePermission);
 			return;
 		}
 		if(args.length < 2)
 		{
-			sender.sendMessage(MessageVariables.NotEnoughArgs);
+			rejectExecute(sender,RejectReason.NotEnoughArgs);
 			return;
 		}
 		if(args.length == 2)
@@ -58,23 +58,11 @@ public class Command_SetRespawnPoint implements CommandBase {
 				sender.sendMessage(MessageVariables.Blue + "チームのリスポーン地点を設定しました。"); 
 				return;
 			}else{
-				sender.sendMessage(MessageVariables.InvalidTeamName);
+				rejectExecute(sender,RejectReason.InvalidTeamName);
 				return;
 			}
 		}
-		sender.sendMessage(MessageVariables.TooManyArgs);
+		rejectExecute(sender,RejectReason.TooManyArgs);
 		return;
 	}
-
-	@Override
-	public void PerformFromCommandBlock(CommandSender sender,String[] args) {
-		
-		
-	}
-
-	@Override
-	public void PerformFromConsole(CommandSender sender,String[] args) {
-		
-	}
-
 }

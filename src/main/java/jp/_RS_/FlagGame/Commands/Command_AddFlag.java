@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class Command_AddFlag implements CommandBase{
+public class Command_AddFlag extends CommandBase{
 	private Main main;
 	private SbManager manager;
 	private FlagConfigHandler config;
@@ -28,21 +28,10 @@ public class Command_AddFlag implements CommandBase{
 		Player p = (Player)sender;
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Join))
 		{
-			sender.sendMessage(MessageVariables.NotHavePermission);
+			rejectExecute(sender,RejectReason.NotHavePermission);
 			return;
 		}
 		config.AddFlagLocation(p.getLocation());
 		sender.sendMessage("保存しました。");
 	}
-
-	@Override
-	public void PerformFromCommandBlock(CommandSender sender, String[] args) {
-	}
-
-	@Override
-	public void PerformFromConsole(CommandSender sender, String[] args) {
-		
-		
-	}
-
 }

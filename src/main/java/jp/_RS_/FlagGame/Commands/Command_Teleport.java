@@ -14,7 +14,7 @@ import jp._RS_.FlagGame.Scoreboard.TeamTeleporter;
 import jp._RS_.FlagGame.Variables.CommandVariables;
 import jp._RS_.FlagGame.Variables.MessageVariables;
 
-public class Command_Teleport implements CommandBase{
+public class Command_Teleport extends CommandBase{
 	private Main main;
 	private SbManager manager;
 	public Command_Teleport(Main main,CommandSender sender,String[] args) {
@@ -38,7 +38,7 @@ public class Command_Teleport implements CommandBase{
 		}
 		if(args.length < 2)
 		{
-			sender.sendMessage(MessageVariables.NotEnoughArgs);
+			rejectExecute(sender,RejectReason.NotEnoughArgs);
 		}
 		if(args.length == 2)
 		{
@@ -55,7 +55,7 @@ public class Command_Teleport implements CommandBase{
 				sender.sendMessage(MessageVariables.Blue + "チーム(" + manager.getBlue().getPlayers().size() + "人)をテレポートしました。");
 				return;
 			}else{
-				sender.sendMessage(MessageVariables.InvalidTeamName);
+				rejectExecute(sender,RejectReason.InvalidTeamName);
 				return;
 			}
 		}
@@ -64,7 +64,7 @@ public class Command_Teleport implements CommandBase{
 			String[] lt = args[1].split(",");
 			if(lt.length != 3)
 			{
-				sender.sendMessage(MessageVariables.InvalidLocation);
+				rejectExecute(sender,RejectReason.InvalidLocation);
 				return;
 			}
 			if(args[2].equalsIgnoreCase("red"))
@@ -78,13 +78,13 @@ public class Command_Teleport implements CommandBase{
 				sender.sendMessage(MessageVariables.Blue + "チーム(" + manager.getBlue().getPlayers().size() + "人)をテレポートしました。");
 				return;
 			}else{
-				sender.sendMessage(MessageVariables.InvalidTeamName);
+				rejectExecute(sender,RejectReason.InvalidTeamName);
 				return;
 			}
 		}
 		if(args.length > 3)
 		{
-			sender.sendMessage(MessageVariables.TooManyArgs);
+			rejectExecute(sender,RejectReason.TooManyArgs);
 			return;
 		}
 	}
@@ -130,14 +130,6 @@ public class Command_Teleport implements CommandBase{
 		if(args.length > 3)
 		{
 			return;
-		}
-		
+		}	
 	}
-
-	@Override
-	public void PerformFromConsole(CommandSender sender,String[] args) {
-		
-		
-	}
-
 }

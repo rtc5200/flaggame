@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class Command_Start implements CommandBase{
+public class Command_Start extends CommandBase{
 	private Main main;
 	private GameController controller;
 	public Command_Start(Main main,CommandSender sender,String[] args) {
@@ -27,12 +27,12 @@ public class Command_Start implements CommandBase{
 	{
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Join))
 		{
-			sender.sendMessage(MessageVariables.NotHavePermission);
+			rejectExecute(sender,RejectReason.NotHavePermission);
 			return;
 		}
 		if(!controller.getStatus().equals(GameStatus.READY))
 		{
-			sender.sendMessage("ゲームはすでに開始されています。");
+			rejectExecute(sender,RejectReason.AlreadyStarted);
 			return;
 		}
 		controller.start();
@@ -45,13 +45,5 @@ public class Command_Start implements CommandBase{
 			return;
 		}
 		controller.start();
-		
 	}
-
-	@Override
-	public void PerformFromConsole(CommandSender sender, String[] args) {
-		// TODO 自動生成されたメソッド・スタブ
-		
-	}
-
 }

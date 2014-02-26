@@ -12,7 +12,7 @@ import jp._RS_.FlagGame.Scoreboard.SbManager;
 import jp._RS_.FlagGame.Variables.CommandVariables;
 import jp._RS_.FlagGame.Variables.MessageVariables;
 
-public class Command_Quit implements CommandBase {
+public class Command_Quit extends CommandBase{
 	private Main main;
 	private SbManager manager;
 	
@@ -29,12 +29,12 @@ public class Command_Quit implements CommandBase {
 		Player p = (Player)sender;
 		if(!p.isOp() && !p.hasPermission(CommandVariables.Permission_Quit))
 		{
-			sender.sendMessage(ChatColor.RED + MessageVariables.NotHavePermission);
+			rejectExecute(sender,RejectReason.NotHavePermission);
 			return;
 		}
 		if(args.length < 1)
 		{
-			sender.sendMessage(MessageVariables.NotEnoughArgs);
+			rejectExecute(sender,RejectReason.NotEnoughArgs);
 			return;
 		}
 		if(args.length == 1)
@@ -48,7 +48,7 @@ public class Command_Quit implements CommandBase {
 			Player p1 = Bukkit.getPlayerExact(args[1]);
 			if(p1 == null || !p1.isOnline())
 			{
-				sender.sendMessage(MessageVariables.InvalidPlayerName);
+				rejectExecute(sender,RejectReason.InvalidPlayerName);
 				return;
 			}
 			manager.Quit(p1);
@@ -57,7 +57,7 @@ public class Command_Quit implements CommandBase {
 		}
 		if(args.length > 2)
 		{
-			sender.sendMessage(MessageVariables.TooManyArgs);
+			rejectExecute(sender,RejectReason.TooManyArgs);
 			return;
 		}
 	}

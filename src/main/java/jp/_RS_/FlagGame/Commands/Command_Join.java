@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
  * /fg join [red/blue]
  *  /fg join [Player's name] [red/blue]
  */
-public class Command_Join implements CommandBase {
+public class Command_Join extends CommandBase {
 	private Main main;
 	private SbManager manager;
 	public Command_Join(Main main,CommandSender sender,String[] args) {
@@ -29,12 +29,12 @@ public class Command_Join implements CommandBase {
 	public void PerformFromPlayer(CommandSender sender,String[] args) {
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Join))
 		{
-			sender.sendMessage(MessageVariables.NotHavePermission);
+			rejectExecute(sender,RejectReason.NotHavePermission);
 			return;
 		}
 		if(args.length < 2)
 		{
-			sender.sendMessage(MessageVariables.NotEnoughArgs);
+			rejectExecute(sender,RejectReason.NotEnoughArgs);
 			return;
 		}
 		if(args.length == 2)
@@ -51,14 +51,14 @@ public class Command_Join implements CommandBase {
 				sender.sendMessage(p.getName() + "が" +  MessageVariables.Blue + "チームに参加しました。");
 				return;
 			}
-			sender.sendMessage(MessageVariables.InvalidTeamName);
+			rejectExecute(sender,RejectReason.InvalidTeamName);
 			return;
 		}else if(args.length  == 3)
 		{
 			Player p = Bukkit.getPlayerExact(args[1]);
 			if(p == null || !p.isOnline())
 			{
-				sender.sendMessage(MessageVariables.InvalidPlayerName);
+				rejectExecute(sender,RejectReason.InvalidPlayerName);
 				return;
 			}
 			if(args[2].equalsIgnoreCase("red"))
@@ -72,11 +72,11 @@ public class Command_Join implements CommandBase {
 				sender.sendMessage(p.getName() + "が" +  MessageVariables.Blue + "チームに参加しました。");
 				return;
 			}
-			sender.sendMessage(MessageVariables.InvalidTeamName);
+			rejectExecute(sender,RejectReason.InvalidTeamName);
 			return;
 		}else if(args.length > 3)
 		{
-			sender.sendMessage(MessageVariables.TooManyArgs);
+			rejectExecute(sender,RejectReason.TooManyArgs);
 			return;
 		}
 	}
