@@ -27,12 +27,12 @@ public class Command_Start extends CommandBase{
 	{
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Join))
 		{
-			rejectExecute(sender,RejectReason.NotHavePermission);
+			rejectExecute(sender,RejectedReason.NotHavePermission);
 			return;
 		}
 		if(!controller.getStatus().equals(GameStatus.READY))
 		{
-			rejectExecute(sender,RejectReason.AlreadyStarted);
+			rejectExecute(sender,RejectedReason.AlreadyStarted);
 			return;
 		}
 		controller.start();

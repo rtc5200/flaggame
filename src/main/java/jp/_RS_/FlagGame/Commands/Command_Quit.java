@@ -29,12 +29,12 @@ public class Command_Quit extends CommandBase{
 		Player p = (Player)sender;
 		if(!p.isOp() && !p.hasPermission(CommandVariables.Permission_Quit))
 		{
-			rejectExecute(sender,RejectReason.NotHavePermission);
+			rejectExecute(sender,RejectedReason.NotHavePermission);
 			return;
 		}
 		if(args.length < 1)
 		{
-			rejectExecute(sender,RejectReason.NotEnoughArgs);
+			rejectExecute(sender,RejectedReason.NotEnoughArgs);
 			return;
 		}
 		if(args.length == 1)
@@ -48,7 +48,7 @@ public class Command_Quit extends CommandBase{
 			Player p1 = Bukkit.getPlayerExact(args[1]);
 			if(p1 == null || !p1.isOnline())
 			{
-				rejectExecute(sender,RejectReason.InvalidPlayerName);
+				rejectExecute(sender,RejectedReason.InvalidPlayerName);
 				return;
 			}
 			manager.Quit(p1);
@@ -57,7 +57,7 @@ public class Command_Quit extends CommandBase{
 		}
 		if(args.length > 2)
 		{
-			rejectExecute(sender,RejectReason.TooManyArgs);
+			rejectExecute(sender,RejectedReason.TooManyArgs);
 			return;
 		}
 	}

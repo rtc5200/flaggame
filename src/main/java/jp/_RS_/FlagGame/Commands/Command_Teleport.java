@@ -38,7 +38,7 @@ public class Command_Teleport extends CommandBase{
 		}
 		if(args.length < 2)
 		{
-			rejectExecute(sender,RejectReason.NotEnoughArgs);
+			rejectExecute(sender,RejectedReason.NotEnoughArgs);
 		}
 		if(args.length == 2)
 		{
@@ -55,7 +55,7 @@ public class Command_Teleport extends CommandBase{
 				sender.sendMessage(MessageVariables.Blue + "チーム(" + manager.getBlue().getPlayers().size() + "人)をテレポートしました。");
 				return;
 			}else{
-				rejectExecute(sender,RejectReason.InvalidTeamName);
+				rejectExecute(sender,RejectedReason.InvalidTeamName);
 				return;
 			}
 		}
@@ -64,7 +64,7 @@ public class Command_Teleport extends CommandBase{
 			String[] lt = args[1].split(",");
 			if(lt.length != 3)
 			{
-				rejectExecute(sender,RejectReason.InvalidLocation);
+				rejectExecute(sender,RejectedReason.InvalidLocation);
 				return;
 			}
 			if(args[2].equalsIgnoreCase("red"))
@@ -78,13 +78,13 @@ public class Command_Teleport extends CommandBase{
 				sender.sendMessage(MessageVariables.Blue + "チーム(" + manager.getBlue().getPlayers().size() + "人)をテレポートしました。");
 				return;
 			}else{
-				rejectExecute(sender,RejectReason.InvalidTeamName);
+				rejectExecute(sender,RejectedReason.InvalidTeamName);
 				return;
 			}
 		}
 		if(args.length > 3)
 		{
-			rejectExecute(sender,RejectReason.TooManyArgs);
+			rejectExecute(sender,RejectedReason.TooManyArgs);
 			return;
 		}
 	}

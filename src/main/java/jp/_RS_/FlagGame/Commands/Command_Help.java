@@ -19,7 +19,7 @@ public class Command_Help extends CommandBase{
 	public void PerformFromPlayer(CommandSender sender, String[] args) {
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Help))
 		{
-			rejectExecute(sender,RejectReason.NotHavePermission);
+			rejectExecute(sender,RejectedReason.NotHavePermission);
 			return;
 		}
 		for(String s : MessageVariables.getHelpMessageList())

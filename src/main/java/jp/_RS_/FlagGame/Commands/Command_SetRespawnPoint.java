@@ -35,12 +35,12 @@ public class Command_SetRespawnPoint extends CommandBase {
 		Player p = (Player)sender;
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_SetRespawnPoint))
 		{
-			rejectExecute(sender,RejectReason.NotHavePermission);
+			rejectExecute(sender,RejectedReason.NotHavePermission);
 			return;
 		}
 		if(args.length < 2)
 		{
-			rejectExecute(sender,RejectReason.NotEnoughArgs);
+			rejectExecute(sender,RejectedReason.NotEnoughArgs);
 			return;
 		}
 		if(args.length == 2)
@@ -58,11 +58,11 @@ public class Command_SetRespawnPoint extends CommandBase {
 				sender.sendMessage(MessageVariables.Blue + "チームのリスポーン地点を設定しました。"); 
 				return;
 			}else{
-				rejectExecute(sender,RejectReason.InvalidTeamName);
+				rejectExecute(sender,RejectedReason.InvalidTeamName);
 				return;
 			}
 		}
-		rejectExecute(sender,RejectReason.TooManyArgs);
+		rejectExecute(sender,RejectedReason.TooManyArgs);
 		return;
 	}
 }

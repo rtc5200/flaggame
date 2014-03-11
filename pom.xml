@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>FlagGame</groupId>
   <artifactId>FlagGame</artifactId>
-  <version>0.1.0</version>
+  <version>0.2</version>
   <build>
     <plugins>
       <plugin>
@@ -26,15 +26,18 @@
 	</repository>
     </repositories>
     <dependencies>
-       <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.6.2-R0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
 		<groupId>me.confuser</groupId>
 		<artifactId>BarAPI</artifactId>
 		<version>3.0</version>
 	</dependency>
+        <dependency>
+        	<groupId>org.bukkit</groupId>
+        	<artifactId>craftbukkit</artifactId>
+        	<version>R1.0</version>
+        	<systemPath>C:\Program Files\Eclipse 4.3\WorkSpace\FlagGame\lib\craftbukkit-1.6.2-R1.0.jar</systemPath>
+        	<optional>true</optional>
+        	<scope>system</scope>
+        </dependency>
     </dependencies>
 </project>

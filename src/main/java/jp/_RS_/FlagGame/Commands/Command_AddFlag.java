@@ -28,7 +28,7 @@ public class Command_AddFlag extends CommandBase{
 		Player p = (Player)sender;
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_AddFlag))
 		{
-			rejectExecute(sender,RejectReason.NotHavePermission);
+			rejectExecute(sender,RejectedReason.NotHavePermission);
 			return;
 		}
 		config.AddFlagLocation(p.getLocation());

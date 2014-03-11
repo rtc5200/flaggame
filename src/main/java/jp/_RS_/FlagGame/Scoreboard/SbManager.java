@@ -129,6 +129,11 @@ public class SbManager {
 		if(blue.hasPlayer(p))return true;
 		return false;
 	}
+	public boolean isPlaying(Player p)
+	{
+		if(red.hasPlayer(p) || blue.hasPlayer(p))return true;
+		return false;
+	}
 	public Team getRed()
 	{
 		return red;

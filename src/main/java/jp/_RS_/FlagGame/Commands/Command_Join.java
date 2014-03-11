@@ -29,12 +29,12 @@ public class Command_Join extends CommandBase {
 	public void PerformFromPlayer(CommandSender sender,String[] args) {
 		if(!sender.isOp() && !sender.hasPermission(CommandVariables.Permission_Join))
 		{
-			rejectExecute(sender,RejectReason.NotHavePermission);
+			rejectExecute(sender,RejectedReason.NotHavePermission);
 			return;
 		}
 		if(args.length < 2)
 		{
-			rejectExecute(sender,RejectReason.NotEnoughArgs);
+			rejectExecute(sender,RejectedReason.NotEnoughArgs);
 			return;
 		}
 		if(args.length == 2)
@@ -51,14 +51,14 @@ public class Command_Join extends CommandBase {
 				sender.sendMessage(p.getName() + "が" +  MessageVariables.Blue + "チームに参加しました。");
 				return;
 			}
-			rejectExecute(sender,RejectReason.InvalidTeamName);
+			rejectExecute(sender,RejectedReason.InvalidTeamName);
 			return;
 		}else if(args.length  == 3)
 		{
 			Player p = Bukkit.getPlayerExact(args[1]);
 			if(p == null || !p.isOnline())
 			{
-				rejectExecute(sender,RejectReason.InvalidPlayerName);
+				rejectExecute(sender,RejectedReason.InvalidPlayerName);
 				return;
 			}
 			if(args[2].equalsIgnoreCase("red"))
@@ -72,11 +72,11 @@ public class Command_Join extends CommandBase {
 				sender.sendMessage(p.getName() + "が" +  MessageVariables.Blue + "チームに参加しました。");
 				return;
 			}
-			rejectExecute(sender,RejectReason.InvalidTeamName);
+			rejectExecute(sender,RejectedReason.InvalidTeamName);
 			return;
 		}else if(args.length > 3)
 		{
-			rejectExecute(sender,RejectReason.TooManyArgs);
+			rejectExecute(sender,RejectedReason.TooManyArgs);
 			return;
 		}
 	}
