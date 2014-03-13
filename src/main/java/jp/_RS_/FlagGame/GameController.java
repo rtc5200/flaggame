@@ -8,6 +8,7 @@ import jp._RS_.FlagGame.Scoreboard.ScoreCheckTask;
 import jp._RS_.FlagGame.Scoreboard.TeamSeparator;
 import jp._RS_.FlagGame.Scoreboard.TeamTeleporter;
 import jp._RS_.FlagGame.Timer.CountDown;
+import jp._RS_.FlagGame.Utils.PlayerSort;
 import jp._RS_.FlagGame.Variables.MessageVariables;
 
 import org.bukkit.Bukkit;
@@ -39,7 +40,7 @@ public class GameController {
 		s.runTaskLater(main,new Runnable(){
 			@Override
 			public void run() {
-				new TeamSeparator(manager).separate(Bukkit.getOnlinePlayers());
+				new TeamSeparator(manager).separate(PlayerSort.getNotJoinedPlayers(manager, Bukkit.getOnlinePlayers()));
 				Location rrespawn = config.getRedTeamConfig().getRespawnPoint();
 				Location brespawn = config.getBlueTeamConfig().getRespawnPoint();
 				new TeamTeleporter(manager.getRed()).Teleport(rrespawn);
@@ -62,7 +63,6 @@ public class GameController {
 	public void exit()
 	{
 		count.setCancelled(true);
-		task.setCancelled(true);
 		int reds = manager.getScoreManager().RedTeam_getScore();
 		int blues = manager.getScoreManager().BlueTeam_getScore();
 		if(reds > blues)

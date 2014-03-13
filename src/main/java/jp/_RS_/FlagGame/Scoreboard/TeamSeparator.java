@@ -21,12 +21,16 @@ public class TeamSeparator {
 	}
 	public HashMap<Player, Team> separate(Player[] players)
 	{
-		HashMap<Player,Team> result = new HashMap<Player,Team>();
 		ArrayList<Player> pls = new ArrayList<Player>();
 		for(Player p : players)
 		{
 			pls.add(p);
 		}
+		return separate(pls);
+	}
+	public HashMap<Player,Team> separate(ArrayList<Player> pls)
+	{
+		HashMap<Player,Team> result = new HashMap<Player,Team>();
 		Collections.shuffle(pls);
 		for(int i = 0;i < pls.size();i++)
 		{

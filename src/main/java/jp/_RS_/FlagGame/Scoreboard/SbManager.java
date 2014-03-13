@@ -1,5 +1,6 @@
 package jp._RS_.FlagGame.Scoreboard;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -16,6 +17,8 @@ import org.bukkit.scoreboard.Team;
 
 import jp._RS_.FlagGame.Main;
 import jp._RS_.FlagGame.Config.TeamConfigHandler;
+import jp._RS_.FlagGame.Events.PlayerTeamJoinEvent;
+import jp._RS_.FlagGame.Events.PlayerTeamQuitEvent;
 import jp._RS_.FlagGame.Variables.ScoreboardVariables;
 
 public class SbManager {
@@ -73,6 +76,7 @@ public class SbManager {
 			iv.addItem(i);
 		}
 		NameColor.Red(p);
+		Bukkit.getServer().getPluginManager().callEvent(new PlayerTeamJoinEvent(main,p,red));
 	}
 	public void JoinBlueTeam(Player p)
 	{
@@ -88,15 +92,18 @@ public class SbManager {
 			iv.addItem(i);
 		}
 		NameColor.Blue(p);
+		Bukkit.getServer().getPluginManager().callEvent(new PlayerTeamJoinEvent(main,p,blue));
 	}
 	public void Quit(Player p)
 	{
 		if(red.hasPlayer(p))
 		{
 			red.removePlayer(p);
+			Bukkit.getServer().getPluginManager().callEvent(new PlayerTeamQuitEvent(main,p,red));
 		}else if(blue.hasPlayer(p))
 		{
 			blue.removePlayer(p);
+			Bukkit.getServer().getPluginManager().callEvent(new PlayerTeamQuitEvent(main,p,blue));
 		}
 		PlayerInventory iv = p.getInventory();
 		iv.clear();
@@ -105,6 +112,7 @@ public class SbManager {
 		iv.setLeggings(new ItemStack(Material.AIR));
 		iv.setBoots(new ItemStack(Material.AIR));
 		NameColor.Reset(p);
+		
 	}
 	public void ClearMembers()
 	{

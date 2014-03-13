@@ -42,6 +42,7 @@ public class ScoreCheckTask extends BukkitRunnable{
 				if(manager.RedTeam_getScore() > config.getObjectivePoint() || manager.BlueTeam_getScore() > config.getObjectivePoint())
 				{
 					main.getController().exit();
+					this.setCancelled(true);
 				}
 			}
 		}
