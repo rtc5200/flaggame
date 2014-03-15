@@ -22,6 +22,14 @@ public class ConfigVariables {
 	{
 		return new File(DataFolder,"Flag.yml");
 	}
+	public static File RedTeamItemFile(File DataFolder)
+	{
+		return new File(DataFolder,"RedTeamItems.txt");
+	}
+	public static File BlueTeamItemFile(File DataFolder)
+	{
+		return new File(DataFolder,"BlueTeamItems.txt");
+	}
 	public static World world = Bukkit.getWorld("world");
 
 }

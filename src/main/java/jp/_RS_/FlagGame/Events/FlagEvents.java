@@ -50,7 +50,7 @@ public class FlagEvents implements Listener{
 							Player sp = ofp.getPlayer();
 							sp.playSound(sp.getLocation(), Sound.SPLASH, 100, 1);
 						}
-						
+						main.getBarManager().message(p.getDisplayName() + "さんがフラッグを占領しました");
 					}	
 				}else if(main.getSbManager().isBlueTeam(p))
 				{
@@ -68,6 +68,7 @@ public class FlagEvents implements Listener{
 							Player sp = ofp.getPlayer();
 							sp.playSound(sp.getLocation(), Sound.LEVEL_UP, 100, 1);
 						}
+						main.getBarManager().message(p.getDisplayName() + "さんがフラッグを占領しました");
 					}		
 				}
 			}

@@ -28,6 +28,12 @@ public class ScoreCheckTask extends BukkitRunnable{
 	public void run() {
 		if(!canceled)
 		{
+			if(manager.RedTeam_getScore() > config.getObjectivePoint() || manager.BlueTeam_getScore() > config.getObjectivePoint())
+			{
+				this.setCancelled(true);
+				main.getController().exit();
+				return;
+			}
 			for(Location l : fconfig.getFlagLocation())
 			{
 				if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 14)
@@ -39,11 +45,7 @@ public class ScoreCheckTask extends BukkitRunnable{
 					manager.BlueTeam_AddScore(config.getRate());
 					main.getBarManager().updateBar();
 				}
-				if(manager.RedTeam_getScore() > config.getObjectivePoint() || manager.BlueTeam_getScore() > config.getObjectivePoint())
-				{
-					main.getController().exit();
-					this.setCancelled(true);
-				}
+				main.getBarManager().updateBar();
 			}
 		}
 	}

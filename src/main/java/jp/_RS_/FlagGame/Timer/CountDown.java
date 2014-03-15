@@ -28,7 +28,7 @@ public class CountDown{
 		
 		public void run(){
 			if(time <= 0 && !canceled){
-				
+				canceled = true;
 				for(Player p : Bukkit.getOnlinePlayers())
 				{
 					p.setLevel(0);
@@ -36,7 +36,7 @@ public class CountDown{
 				}
 				plugin.getController().exit();
 				//カウントダウン終了
-				canceled = true;
+				
 			}
 			if(!canceled){
 				time--;

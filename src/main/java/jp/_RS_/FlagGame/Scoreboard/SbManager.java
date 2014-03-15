@@ -1,5 +1,7 @@
 package jp._RS_.FlagGame.Scoreboard;
 
+import me.confuser.barapi.BarAPI;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import jp._RS_.FlagGame.Main;
+import jp._RS_.FlagGame.Config.ConfigHandler;
 import jp._RS_.FlagGame.Config.TeamConfigHandler;
 import jp._RS_.FlagGame.Events.PlayerTeamJoinEvent;
 import jp._RS_.FlagGame.Events.PlayerTeamQuitEvent;
@@ -28,11 +31,13 @@ public class SbManager {
 	private Team blue;
 	private Objective pstats;
 	private Objective fstats;
+	private ConfigHandler config;
 	private TeamConfigHandler rtconfig;
 	private TeamConfigHandler btconfig;
 	private ScoreManager smanager;
 	public SbManager(Main main) {
 		this.main = main;
+		config = main.getConfigHandler();
 		rtconfig = main.getConfigHandler().getRedTeamConfig();
 		btconfig = main.getConfigHandler().getBlueTeamConfig();
 		load();
@@ -71,12 +76,13 @@ public class SbManager {
 		iv.setChestplate(rtconfig.getChestplate());
 		iv.setLeggings(rtconfig.getLeggings());
 		iv.setBoots(rtconfig.getBoots());
-		for(ItemStack i : rtconfig.getItems())
+		for(ItemStack i : config.getRedItems())
 		{
 			iv.addItem(i);
 		}
 		NameColor.Red(p);
 		Bukkit.getServer().getPluginManager().callEvent(new PlayerTeamJoinEvent(main,p,red));
+		main.getBarManager().setRedBar(p);
 	}
 	public void JoinBlueTeam(Player p)
 	{
@@ -87,12 +93,22 @@ public class SbManager {
 		iv.setChestplate(btconfig.getChestplate());
 		iv.setLeggings(btconfig.getLeggings());
 		iv.setBoots(btconfig.getBoots());
-		for(ItemStack i : btconfig.getItems())
+		for(ItemStack i : config.getBlueItems())
 		{
 			iv.addItem(i);
 		}
 		NameColor.Blue(p);
 		Bukkit.getServer().getPluginManager().callEvent(new PlayerTeamJoinEvent(main,p,blue));
+		main.getBarManager().setBlueBar(p);
+	}
+	public void JoinEqually(Player p)
+	{
+		if(red.getSize() > blue.getSize())
+		{
+			JoinBlueTeam(p);
+		}else{
+			JoinRedTeam(p);
+		}
 	}
 	public void Quit(Player p)
 	{
@@ -112,7 +128,8 @@ public class SbManager {
 		iv.setLeggings(new ItemStack(Material.AIR));
 		iv.setBoots(new ItemStack(Material.AIR));
 		NameColor.Reset(p);
-		
+		main.getBarManager().updateBar();
+		BarAPI.removeBar(p);
 	}
 	public void ClearMembers()
 	{
@@ -120,11 +137,28 @@ public class SbManager {
 		{
 			red.removePlayer(p);
 			NameColor.Reset(p.getPlayer());
+			Player op = p.getPlayer();
+			if(op != null && op.isOnline())
+			{
+				op.setHealth(20);
+				op.setMaxHealth(20);
+				op.setFoodLevel(20);
+				op.getInventory().clear();
+			}
+			
 		}
 		for(OfflinePlayer p : blue.getPlayers())
 		{
 			blue.removePlayer(p);
 			NameColor.Reset(p.getPlayer());
+			Player op = p.getPlayer();
+			if(op != null && op.isOnline())
+			{
+				op.setHealth(20);
+				op.setMaxHealth(20);
+				op.setFoodLevel(20);
+				op.getInventory().clear();
+			}
 		}
 	}
 	public boolean isRedTeam(Player p)

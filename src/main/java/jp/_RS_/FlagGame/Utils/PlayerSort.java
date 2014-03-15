@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jp._RS_.FlagGame.Main;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 public class PlayerSort {
@@ -16,7 +17,10 @@ public class PlayerSort {
 		{
 			if(!m.isPlaying(p))
 			{
-				result.add(p);
+				if(!p.getGameMode().equals(GameMode.CREATIVE))
+				{
+					result.add(p);
+				}
 			}
 		}
 		return result;

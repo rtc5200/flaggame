@@ -27,7 +27,6 @@ public class Main extends JavaPlugin implements Listener {
 	{
 		config = new ConfigHandler(this);
 		sm = new SbManager(this);
-		getCommand("fg").setExecutor(new FGCommandExecutor(this));
 		registerEvents();
 		controller = new GameController(this);
 		bar = new BarManager(this);
@@ -35,6 +34,7 @@ public class Main extends JavaPlugin implements Listener {
 		{
 			p.setScoreboard(sm.getScoreboard());
 		}
+		getCommand("fg").setExecutor(new FGCommandExecutor(this));
 	}
 	@Override
 	public void onDisable()

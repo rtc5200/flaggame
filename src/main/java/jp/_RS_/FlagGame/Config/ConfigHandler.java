@@ -2,11 +2,13 @@ package jp._RS_.FlagGame.Config;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import jp._RS_.FlagGame.Main;
 import jp._RS_.FlagGame.Timer.CountDown;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 public class ConfigHandler {
 	private YamlConfiguration mconfig;
@@ -17,6 +19,7 @@ public class ConfigHandler {
 	private Long time;
 	private Integer obgp;
 	private Integer op;
+	private ItemConfigHandler IChandler;
 	public ConfigHandler(Main main) {
 		this.main = main;
 		new FileHelper(main.getLogger(),main.getDataFolder());
@@ -36,7 +39,7 @@ public class ConfigHandler {
 		time = mconfig.getLong("GameTime");
 		obgp = mconfig.getInt("ObjectivePoint");
 		op = mconfig.getInt("OccupyIncreasePointRate");
-		
+		IChandler = new ItemConfigHandler(main);
 	}
 	public TeamConfigHandler getRedTeamConfig()
 	{
@@ -61,6 +64,14 @@ public class ConfigHandler {
 	public Integer getRate()
 	{
 		return op;
+	}
+	public ArrayList<ItemStack> getRedItems()
+	{
+		return IChandler.getRedItems();
+	}
+	public ArrayList<ItemStack> getBlueItems()
+	{
+		return IChandler.getBlueItems();
 	}
 
 }

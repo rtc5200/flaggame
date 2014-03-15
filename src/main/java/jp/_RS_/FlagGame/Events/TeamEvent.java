@@ -19,6 +19,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scoreboard.Team;
 
 import jp._RS_.FlagGame.Main;
+import jp._RS_.FlagGame.Utils.KeepInventoryThread;
 import jp._RS_.FlagGame.Variables.MessageVariables;
 
 
@@ -32,21 +33,19 @@ public class TeamEvent implements Listener{
 	public void Respawn(PlayerDeathEvent e)
 	{
 		Player p = e.getEntity();
-		
+		 ItemStack[] armor = p.getInventory().getArmorContents();
+		 ItemStack[] items = p.getInventory().getContents();
 		if(!main.getSbManager().isPlaying(p))
 		{
 			return;
 		}
-		e.getDrops().clear();
-		e.setDroppedExp(0);
-		ItemStack[] is = p.getInventory().getContents();
-		ItemStack[] ais = p.getInventory().getArmorContents();
-		p.getInventory().clear();
 		Packet205ClientCommand packet = new Packet205ClientCommand();
 		packet.a = 1;
 		((CraftPlayer)p).getHandle().playerConnection.a(packet);
-		p.getInventory().setContents(is);
-		p.getInventory().setArmorContents(ais);
+		e.getDrops().clear();
+		e.setKeepLevel(true);
+		e.setDroppedExp(0);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(main, new KeepInventoryThread(p, armor, items));
 		if(main.getSbManager().isRedTeam(p))
 		{
 			p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());

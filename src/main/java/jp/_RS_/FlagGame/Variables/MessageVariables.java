@@ -3,6 +3,8 @@ package jp._RS_.FlagGame.Variables;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp._RS_.FlagGame.Config.ConfigHandler;
+
 import org.bukkit.ChatColor;
 
 public class MessageVariables {
@@ -19,13 +21,24 @@ public class MessageVariables {
 	public static List<String> getHelpMessageList()
 	{
 		ArrayList<String> result = new ArrayList<String>();
-		result.add("/fg join [red/blue]                   -        赤/青チームに参加します。");
-		result.add("/fg quit                                     -    チームから離脱します。");
-		result.add("/fg start                                    -    ゲームを開始します。");
-		result.add("/fg tele [red/blue]                   -    赤/青チームメンバーを自分のいる場所へテレポートします。");
-		result.add("/fg tele <x,y,z> [red/blue]     -    赤/青チームメンバーを指定座標へテレポートします。");
-		result.add("/fg setrp [red/blue]                 -    自分のいる場所を赤/青チームのリスポーンポイントに設定します。");
-		result.add("/fg af                                         -    自分のいる場所のブロックをフラッグとして追加します。");
+		result.add("/fg join [red/blue]    -  赤/青チームに参加します。");
+		result.add("/fg quit         -    チームから離脱します。");
+		result.add("/fg start        -    ゲームを開始します。");
+		result.add("/fg tele [red/blue]      -    赤/青チームメンバーを自分のいる場所へテレポートします。");
+		result.add("/fg tele <x,y,z> [red/blue]    -    赤/青チームメンバーを指定座標へテレポートします。");
+		result.add("/fg setrp [red/blue]    -    自分のいる場所を赤/青チームのリスポーンポイントに設定します。");
+		result.add("/fg af             -    自分のいる場所のブロックをフラッグとして追加します。");
+		return result;
+	}
+	public static List<String> getGameStartMessageList(ConfigHandler config)
+	{
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(ChatColor.GREEN + "ゲーム開始です!");
+		result.add(ChatColor.GREEN + "--------------------------------------------------------");
+		result.add(ChatColor.GREEN + "オペレーション:フラッグを占領し、自チームポイントを上昇させる。");
+		result.add(ChatColor.GREEN + "勝利条件: チームポイント" + ChatColor.AQUA + config.getObjectivePoint() +
+				ChatColor.GREEN + "の達成");
+		result.add(ChatColor.GREEN + "--------------------------------------------------------");
 		return result;
 	}
 	//-------

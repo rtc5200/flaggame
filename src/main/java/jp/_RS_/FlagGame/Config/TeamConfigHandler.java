@@ -1,11 +1,15 @@
 package jp._RS_.FlagGame.Config;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import jp._RS_.FlagGame.Main;
+import jp._RS_.FlagGame.Utils.StringItemStackConverter;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,7 +21,7 @@ public class TeamConfigHandler {
 	private ItemStack Leggings;
 	private ItemStack Boots;
 	private Location respawn;
-	private ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+	//private ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 	private YamlConfiguration config;
 	private File file;
 	public TeamConfigHandler(File file) {
@@ -28,9 +32,6 @@ public class TeamConfigHandler {
 		config.addDefault("Leggings", Material.AIR.getId());
 		config.addDefault("Boots", Material.AIR.getId());
 		config.addDefault("RespawnPoint", "0,0,0");
-		ArrayList<Integer> it = new ArrayList<Integer>();
-		it.add(Material.WOOD_SWORD.getId());
-		config.addDefault("Items", it);
 		config.options().copyDefaults(true);
 		try {
 			config.save(file);
@@ -43,10 +44,6 @@ public class TeamConfigHandler {
 		Boots = new ItemStack(Material.getMaterial(config.getInt("Boots")));
 		String[] lt = config.getString("RespawnPoint").split(",");
 		respawn = new Location(ConfigVariables.world,Integer.parseInt(lt[0]),Integer.parseInt(lt[1]),Integer.parseInt(lt[2]));
-		for(String s : config.getStringList("Items"))
-		{
-			items.add(new ItemStack(Material.matchMaterial(s)));
-		}
 	}
 	public ItemStack getHelmet()
 	{
@@ -79,10 +76,10 @@ public class TeamConfigHandler {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<ItemStack> getItems()
+	/*public ArrayList<ItemStack> getItems()
 	{
 		return items;
-	}
+	}*/
 	public static TeamConfigHandler load(File file)
 	{
 		return new TeamConfigHandler(file);

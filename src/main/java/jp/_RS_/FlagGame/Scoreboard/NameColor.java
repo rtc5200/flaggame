@@ -15,7 +15,10 @@ public class NameColor {
 	}
 	public static void Reset(Player p)
 	{
-		p.setDisplayName(ChatColor.RESET + p.getName() + ChatColor.RESET);
+		if(p != null && p.isOnline())
+		{
+			p.setDisplayName(ChatColor.RESET + p.getName() + ChatColor.RESET);
+		}
 	}
 
 }

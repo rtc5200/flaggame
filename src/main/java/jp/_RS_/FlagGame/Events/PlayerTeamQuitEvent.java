@@ -9,7 +9,7 @@ import org.bukkit.scoreboard.Team;
 
 public class PlayerTeamQuitEvent extends Event {
 	private Main main;
-	private final HandlerList handles = new HandlerList();
+	private static final HandlerList handles = new HandlerList();
 	private Player p;
 	private Team team;
 	public PlayerTeamQuitEvent(Main main,Player player,Team team) {
@@ -19,6 +19,10 @@ public class PlayerTeamQuitEvent extends Event {
 	}
 	@Override
 	public HandlerList getHandlers() {
+		return handles;
+	}
+	public static HandlerList getHandlerList()
+	{
 		return handles;
 	}
 	public Player getPlayer()

@@ -43,12 +43,18 @@ public class Command_Join extends CommandBase {
 			if(args[1].equalsIgnoreCase("red"))
 			{
 				manager.JoinRedTeam(p);
-				sender.sendMessage(p.getName() + "が" + MessageVariables.Red + "チームに参加しました。");
+				p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
 				return;
 			}else if(args[1].equalsIgnoreCase("blue"))
 			{
 				manager.JoinBlueTeam(p);
-				sender.sendMessage(p.getName() + "が" +  MessageVariables.Blue + "チームに参加しました。");
+				p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
+				return;
+			}else if(args[1].equalsIgnoreCase("eq"))
+			{
+				manager.JoinEqually(p);
+				if(manager.isRedTeam(p))p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
+				if(manager.isBlueTeam(p))p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
 				return;
 			}
 			rejectExecute(sender,RejectedReason.InvalidTeamName);
@@ -64,12 +70,16 @@ public class Command_Join extends CommandBase {
 			if(args[2].equalsIgnoreCase("red"))
 			{
 				manager.JoinRedTeam(p);
-				sender.sendMessage(p.getName() + "が" + MessageVariables.Red + "チームに参加しました。");
+				p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
 				return;
 			}else if(args[2].equalsIgnoreCase("blue"))
 			{
 				manager.JoinBlueTeam(p);
-				sender.sendMessage(p.getName() + "が" +  MessageVariables.Blue + "チームに参加しました。");
+				p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
+				return;
+			}else if(args[2].equalsIgnoreCase("eq"))
+			{
+				manager.JoinEqually(p);
 				return;
 			}
 			rejectExecute(sender,RejectedReason.InvalidTeamName);
@@ -92,10 +102,16 @@ public class Command_Join extends CommandBase {
 				if(args[2].equalsIgnoreCase("red"))
 				{
 					manager.JoinRedTeam(p);
+					p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
 					return;
 				}else if(args[2].equalsIgnoreCase("blue"))
 				{
 					manager.JoinBlueTeam(p);
+					p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
+					return;
+				}else if(args[2].equalsIgnoreCase("eq"))
+				{
+					manager.JoinEqually(p);
 					return;
 				}
 				return;
@@ -113,10 +129,12 @@ public class Command_Join extends CommandBase {
 				if(args[2].equalsIgnoreCase("red"))
 				{
 					manager.JoinRedTeam(p);
+					p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
 					return;
 				}else if(args[2].equalsIgnoreCase("blue"))
 				{
 					manager.JoinBlueTeam(p);
+					p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
 					return;
 				}
 				return;

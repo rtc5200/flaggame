@@ -26,7 +26,7 @@ public class ScoreManager {
 	{
 		ob = sb.registerNewObjective("TeamScore", "dummy");
 		ob.setDisplaySlot(DisplaySlot.SIDEBAR);
-		ob.setDisplayName("チームスコア");
+		ob.setDisplayName("チームポイント");
 		reds = main.getServer().getOfflinePlayer(ChatColor.RED + "赤");
 		blues = main.getServer().getOfflinePlayer(ChatColor.BLUE + "青");
 		ob.getScore(reds).setScore(0);

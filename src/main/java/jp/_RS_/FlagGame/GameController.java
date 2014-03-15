@@ -1,6 +1,7 @@
 package jp._RS_.FlagGame;
 
 import jp._RS_.FlagGame.Config.ConfigHandler;
+import jp._RS_.FlagGame.Config.ConfigVariables;
 import jp._RS_.FlagGame.Scoreboard.BarManager;
 import jp._RS_.FlagGame.Scoreboard.FlagManager;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
@@ -34,6 +35,7 @@ public class GameController {
 	public void start()
 	{
 		manager.getScoreManager().resetScores();
+		fmanager.resetFlags();
 		status = GameStatus.WAIT;
 		BukkitScheduler s = main.getServer().getScheduler();
 		main.getServer().broadcastMessage(ChatColor.GREEN + "チーム分け準備中です.....");
@@ -46,11 +48,11 @@ public class GameController {
 				new TeamTeleporter(manager.getRed()).Teleport(rrespawn);
 				new TeamTeleporter(manager.getBlue()).Teleport(brespawn);
 				main.getServer().broadcastMessage(ChatColor.GREEN + "チーム分け完了しました!");
-				
 				count = new CountDown(config.getGameTime(),main);
-				main.getServer().broadcastMessage(ChatColor.GREEN + "ゲーム開始です!");
-				main.getServer().broadcastMessage(ChatColor.GREEN + "目標チーム合計スコアは" +ChatColor.AQUA + config.getObjectivePoint() + 
-						ChatColor.GREEN + "です。");
+				for(String s: MessageVariables.getGameStartMessageList(config))
+				{
+					main.getServer().broadcastMessage(s);
+				}
 				count.start();
 				task = new ScoreCheckTask(main);
 				task.setCancelled(false);
@@ -62,26 +64,26 @@ public class GameController {
 	}
 	public void exit()
 	{
+		task.setCancelled(true);
 		count.setCancelled(true);
 		int reds = manager.getScoreManager().RedTeam_getScore();
 		int blues = manager.getScoreManager().BlueTeam_getScore();
 		if(reds > blues)
 		{
-			main.getServer().broadcastMessage(MessageVariables.Red + "チームの勝利!");
+			main.getServer().broadcastMessage(MessageVariables.Red + "チームの勝利です!");
 			//赤勝ち
 		}else if (reds < blues)
 		{
-			main.getServer().broadcastMessage(MessageVariables.Blue + "チームの勝利!");
+			main.getServer().broadcastMessage(MessageVariables.Blue + "チームの勝利です!");
 			//青勝ち
 		}else{
-			main.getServer().broadcastMessage("引き分け!");
+			main.getServer().broadcastMessage("引き分けです!");
 			//引き分け
 		}
+		main.getServer().broadcastMessage(ChatColor.GREEN + "お疲れ様でした。");
+		new TeamTeleporter(manager.getRed()).Teleport(ConfigVariables.world.getSpawnLocation());
+		new TeamTeleporter(manager.getBlue()).Teleport(ConfigVariables.world.getSpawnLocation());
 		manager.ClearMembers();
-		for(Player p : Bukkit.getOnlinePlayers())
-		{
-			p.teleport(p.getWorld().getSpawnLocation());
-		}
 		main.getBarManager().removeAll();
 		status = GameStatus.READY;
 	}
