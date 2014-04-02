@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -29,28 +31,35 @@ public class TeamEvent implements Listener{
 	public TeamEvent(Main main) {
 		this.main = main;
 	}
-	@EventHandler
-	public void Respawn(PlayerDeathEvent e)
+	@EventHandler(priority = EventPriority.LOW)
+	public void Respawn(EntityDamageEvent e)
 	{
-		Player p = e.getEntity();
-		 ItemStack[] armor = p.getInventory().getArmorContents();
-		 ItemStack[] items = p.getInventory().getContents();
-		if(!main.getSbManager().isPlaying(p))
+		if(e.getEntity() instanceof Player)
 		{
-			return;
-		}
-		Packet205ClientCommand packet = new Packet205ClientCommand();
-		packet.a = 1;
-		((CraftPlayer)p).getHandle().playerConnection.a(packet);
-		e.getDrops().clear();
-		e.setKeepLevel(true);
-		e.setDroppedExp(0);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(main, new KeepInventoryThread(p, armor, items));
-		if(main.getSbManager().isRedTeam(p))
-		{
-			p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
-		}else{
-			p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
+			if(e.getCause().equals(DamageCause.VOID))
+			{
+				Player p = (Player) e.getEntity();
+				ItemStack[] armor = p.getInventory().getArmorContents();
+				ItemStack[] items = p.getInventory().getContents();
+				if(!main.getSbManager().isPlaying(p))
+				{
+					p.teleport(p.getWorld().getSpawnLocation());
+					return;
+				}
+				e.setDamage(0f);
+				e.setCancelled(true);
+				Packet205ClientCommand packet = new Packet205ClientCommand();
+				packet.a = 1;
+				((CraftPlayer)p).getHandle().playerConnection.a(packet);
+				Bukkit.getScheduler().scheduleSyncDelayedTask(main, new KeepInventoryThread(p, armor, items));
+				if(main.getSbManager().isRedTeam(p))
+				{
+					p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
+
+				}else{
+					p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
+				}
+			}
 		}
 	}
 	@EventHandler(priority = EventPriority.LOW)
@@ -76,7 +85,7 @@ public class TeamEvent implements Listener{
 		}else{
 			Bukkit.broadcastMessage(p.getDisplayName() + "が" + MessageVariables.Blue + "チームに参加しました。");
 		}
-		
+
 	}
 	@EventHandler
 	public void onQuitTeam(PlayerTeamQuitEvent e)

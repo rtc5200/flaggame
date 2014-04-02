@@ -5,3 +5,4 @@ commands:
   fg:
     description: Commands for FlagGame
     usage: /<command> [args]..
+    default: op

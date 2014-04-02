@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,7 +34,7 @@ public class FlagConfigHandler {
 			points.add(new Location(ConfigVariables.world,Integer.parseInt(ls2[0]),Integer.parseInt(ls2[1]),Integer.parseInt(ls2[2])));
 		}
 	}
-	public ArrayList<Location> getFlagLocation()
+	public ArrayList<Location> getFlagLocations()
 	{
 		return points;
 	}
@@ -53,8 +54,7 @@ public class FlagConfigHandler {
 	}
 	public boolean isFlag(Location loc)
 	{
-		if(points.contains(loc))return true;
-		return false;
+		return isFlag(loc.getBlock());
 	}
 	public int getAmount()
 	{
@@ -62,9 +62,14 @@ public class FlagConfigHandler {
 	}
 	public boolean isFlag(Block b)
 	{
-		if(points.contains(b.getLocation())&&b.getType().equals(Material.WOOL))
+		if(b.getState().getType().equals(Material.WOOL))
 		{
-			return true;
+			Location bl= b.getLocation();
+			for(Location loc : points)
+			{
+				if(bl.getBlockX() == loc.getBlockX() && bl.getBlockY() == loc.getBlockY()
+						&& bl.getBlockZ() == loc.getBlockZ() && loc.getWorld().equals(bl.getWorld()))return true;
+			}
 		}
 		return false;
 	}

@@ -27,9 +27,9 @@ public class Main extends JavaPlugin implements Listener {
 	{
 		config = new ConfigHandler(this);
 		sm = new SbManager(this);
-		registerEvents();
 		controller = new GameController(this);
 		bar = new BarManager(this);
+		registerEvents();
 		for(Player p : Bukkit.getOnlinePlayers())
 		{
 			p.setScoreboard(sm.getScoreboard());
@@ -39,7 +39,7 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable()
 	{
-		
+
 	}
 	private void registerEvents()
 	{
@@ -65,5 +65,5 @@ public class Main extends JavaPlugin implements Listener {
 	{
 		return bar;
 	}
-	
+
 }

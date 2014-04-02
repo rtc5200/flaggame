@@ -16,17 +16,18 @@ public class FlagManager {
 	public FlagManager(Main main) {
 		this.main = main;
 		config = main.getConfigHandler().getFlagConfig();
-		fs = config.getFlagLocation();
+		fs = config.getFlagLocations();
 	}
 	public void resetFlags()
 	{
 		for(Location loc : fs)
 		{
 			Block b = loc.getBlock();
-			if(b.getType().equals(Material.WOOL))
+			if(!b.getType().equals(Material.WOOL))
 			{
-				b.setData((byte) 5);
+				b.setType(Material.WOOL);
 			}
+			b.setData((byte) 5);
 		}
 	}
 	public int getRedFlags()

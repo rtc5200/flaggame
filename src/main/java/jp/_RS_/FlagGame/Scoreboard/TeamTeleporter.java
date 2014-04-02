@@ -3,6 +3,7 @@ package jp._RS_.FlagGame.Scoreboard;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 public class TeamTeleporter {
@@ -14,7 +15,11 @@ public class TeamTeleporter {
 	{
 		for(OfflinePlayer of : team.getPlayers())
 		{
-			if(of.isOnline())of.getPlayer().teleport(loc);
+			Player p = of.getPlayer();
+			if(p != null && p.isOnline())
+				{
+					p.teleport(loc);
+				}
 		}
 	}
 	public void Teleport(World world,int x,int y,int z)

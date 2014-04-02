@@ -43,7 +43,7 @@ public class TeamConfigHandler {
 		Leggings = new ItemStack(Material.getMaterial(config.getInt("Leggings")));
 		Boots = new ItemStack(Material.getMaterial(config.getInt("Boots")));
 		String[] lt = config.getString("RespawnPoint").split(",");
-		respawn = new Location(ConfigVariables.world,Integer.parseInt(lt[0]),Integer.parseInt(lt[1]),Integer.parseInt(lt[2]));
+		respawn = new Location(ConfigVariables.world,Integer.parseInt(lt[0]),Integer.parseInt(lt[1]) + 1,Integer.parseInt(lt[2]));
 	}
 	public ItemStack getHelmet()
 	{
@@ -67,7 +67,7 @@ public class TeamConfigHandler {
 	}
 	public void setRespawnLocation(Location loc)
 	{
-		int x = loc.getBlockX();int y = loc.getBlockY();int z = loc.getBlockZ();
+		int x = loc.getBlockX();int y = loc.getBlockY() + 1;int z = loc.getBlockZ();
 		String s = x + "," +  y + "," + z;
 		config.set("RespawnPoint", s);
 		try {

@@ -2,6 +2,7 @@ package jp._RS_.FlagGame.Scoreboard;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import jp._RS_.FlagGame.Main;
@@ -28,19 +29,20 @@ public class ScoreCheckTask extends BukkitRunnable{
 	public void run() {
 		if(!canceled)
 		{
-			if(manager.RedTeam_getScore() > config.getObjectivePoint() || manager.BlueTeam_getScore() > config.getObjectivePoint())
+			if(manager.RedTeam_getScore() >= config.getObjectivePoint() || manager.BlueTeam_getScore() >= config.getObjectivePoint())
 			{
 				this.setCancelled(true);
 				main.getController().exit();
 				return;
 			}
-			for(Location l : fconfig.getFlagLocation())
+			for(Location loc : fconfig.getFlagLocations())
 			{
-				if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 14)
+				Block b = loc.getBlock();
+				if(b.getType().equals(Material.WOOL) && b.getData() == 14)
 				{
 					manager.RedTeam_AddScore(config.getRate());
 					main.getBarManager().updateBar();
-				}else if(l.getBlock().getType().equals(Material.WOOL) && l.getBlock().getData() == 11)
+				}else if(b.getType().equals(Material.WOOL) && b.getData() == 11)
 				{
 					manager.BlueTeam_AddScore(config.getRate());
 					main.getBarManager().updateBar();

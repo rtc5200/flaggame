@@ -68,16 +68,18 @@ public class GameController {
 		count.setCancelled(true);
 		int reds = manager.getScoreManager().RedTeam_getScore();
 		int blues = manager.getScoreManager().BlueTeam_getScore();
+		main.getServer().broadcastMessage(MessageVariables.Red + "チームのポイント ： " + reds);
+		main.getServer().broadcastMessage(MessageVariables.Blue + "チームのポイント ： " + blues);
 		if(reds > blues)
 		{
-			main.getServer().broadcastMessage(MessageVariables.Red + "チームの勝利です!");
+			main.getServer().broadcastMessage("従って、このゲームは" + MessageVariables.Red + "チームの勝利です!");
 			//赤勝ち
 		}else if (reds < blues)
 		{
-			main.getServer().broadcastMessage(MessageVariables.Blue + "チームの勝利です!");
+			main.getServer().broadcastMessage("従って、このゲームは" + MessageVariables.Blue + "チームの勝利です!");
 			//青勝ち
 		}else{
-			main.getServer().broadcastMessage("引き分けです!");
+			main.getServer().broadcastMessage("従って、このゲームは" + "引き分けです!");
 			//引き分け
 		}
 		main.getServer().broadcastMessage(ChatColor.GREEN + "お疲れ様でした。");

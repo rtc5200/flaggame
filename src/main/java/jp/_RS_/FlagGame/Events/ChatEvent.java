@@ -1,5 +1,7 @@
 package jp._RS_.FlagGame.Events;
 
+import java.util.logging.Logger;
+
 import jp._RS_.FlagGame.Main;
 import jp._RS_.FlagGame.Scoreboard.SbManager;
 import jp._RS_.FlagGame.Scoreboard.TeamMessage;
@@ -10,7 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
-public class ChatEvent implements Listener { 
+public class ChatEvent implements Listener {
 	private Main main;
 	private SbManager manager;
 	public ChatEvent(Main main) {

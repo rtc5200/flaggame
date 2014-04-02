@@ -19,6 +19,8 @@ public class BarManager {
 	private FlagManager fmanager;
 	private SbManager sm;
 	private ArrayList<BukkitTask> tasks = new ArrayList<BukkitTask>();
+	private String rmessage = ChatColor.RED + "赤" + ChatColor.RESET + "チームの占領率 ";
+	private String bmessage = ChatColor.BLUE + "青" + ChatColor.RESET + "チームの占領率";
 	public BarManager(Main main) {
 		this.main = main;
 		this.fmanager = main.getController().getFlagManager();
@@ -26,25 +28,24 @@ public class BarManager {
 	}
 	public void updateBar()
 	{
-		 String rmessage = ChatColor.RED + "赤" + ChatColor.RESET + "チームの占領率 ";
-		 String bmessage = ChatColor.BLUE + "青" + ChatColor.RESET + "チームの占領率";
 		for(OfflinePlayer p : sm.getRed().getPlayers())
 		{
 			Player op = p.getPlayer();
-			if(p.isOnline())
+			if(p != null && p.isOnline())
 			{
 				if(BarAPI.hasBar(op))
 				{
 					BarAPI.setHealth(op, getRedFlagPercent());
 				}else{
+					BarAPI.setMessage(op,rmessage,100);
 					BarAPI.setMessage(op,rmessage,getRedFlagPercent());
 				}
-			}	
+			}
 		}
 		for(OfflinePlayer p : sm.getBlue().getPlayers())
 		{
 			Player op = p.getPlayer();
-			if(p.isOnline())
+			if(p != null && p.isOnline())
 			{
 				if(BarAPI.hasBar(op))
 				{
@@ -55,14 +56,32 @@ public class BarManager {
 			}
 		}
 	}
+	public void updateBar(Player p)
+	{
+		if(main.getSbManager().isRedTeam(p))
+		{
+			if(BarAPI.hasBar(p))
+			{
+				BarAPI.setHealth(p, getRedFlagPercent());
+			}else{
+				BarAPI.setMessage(p,rmessage,getRedFlagPercent());
+			}
+		}else if(main.getSbManager().isBlueTeam(p))
+		{
+			if(BarAPI.hasBar(p))
+			{
+				BarAPI.setHealth(p, getBlueFlagPercent());
+			}else{
+				BarAPI.setMessage(p,bmessage,getBlueFlagPercent());
+			}
+		}
+	}
 	public void setRedBar(Player p)
 	{
-		String rmessage = ChatColor.RED + "赤" + ChatColor.RESET + "チームの占領率 ";
 		BarAPI.setMessage(p,rmessage,getRedFlagPercent());
 	}
 	public void setBlueBar(Player p)
 	{
-		 String bmessage = ChatColor.BLUE + "青" + ChatColor.RESET + "チームの占領率";
 		BarAPI.setMessage(p,bmessage,getBlueFlagPercent());
 	}
 	public void message(String s)
@@ -99,7 +118,7 @@ public class BarManager {
 							BarAPI.setMessage(op.getPlayer(),original.substring(0,ci),getBlueFlagPercent());
 						}
 					}
-				}	
+				}
 			}, i*2));
 		}
 		tasks.add(sc.runTaskLater(main, new Runnable(){
@@ -122,7 +141,7 @@ public class BarManager {
 			{
 				BarAPI.removeBar(ofp.getPlayer());
 			}
-			
+
 		}
 	}
 	private float getRedFlagPercent()
