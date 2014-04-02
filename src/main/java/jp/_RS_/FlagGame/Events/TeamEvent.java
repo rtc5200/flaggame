@@ -2,6 +2,7 @@ package jp._RS_.FlagGame.Events;
 
 import java.util.ArrayList;
 
+import me.confuser.barapi.BarAPI;
 import net.minecraft.server.v1_6_R2.Packet205ClientCommand;
 
 import org.bukkit.Bukkit;
@@ -32,35 +33,40 @@ public class TeamEvent implements Listener{
 		this.main = main;
 	}
 	@EventHandler(priority = EventPriority.LOW)
-	public void Respawn(EntityDamageEvent e)
+	public void DeathRespawn(PlayerDeathEvent e)
 	{
-		if(e.getEntity() instanceof Player)
-		{
-			if(e.getCause().equals(DamageCause.VOID))
-			{
-				Player p = (Player) e.getEntity();
-				ItemStack[] armor = p.getInventory().getArmorContents();
-				ItemStack[] items = p.getInventory().getContents();
-				if(!main.getSbManager().isPlaying(p))
-				{
-					p.teleport(p.getWorld().getSpawnLocation());
-					return;
-				}
-				e.setDamage(0f);
-				e.setCancelled(true);
-				Packet205ClientCommand packet = new Packet205ClientCommand();
-				packet.a = 1;
-				((CraftPlayer)p).getHandle().playerConnection.a(packet);
-				Bukkit.getScheduler().scheduleSyncDelayedTask(main, new KeepInventoryThread(p, armor, items));
-				if(main.getSbManager().isRedTeam(p))
+		final Player p = (Player) e.getEntity();
+		BarAPI.removeBar(p);
+		ItemStack[] armor = p.getInventory().getArmorContents();
+		ItemStack[] items = p.getInventory().getContents();
+		e.setKeepLevel(true);
+		e.setDroppedExp(0);
+		e.getDrops().clear();
+		Bukkit.getScheduler().scheduleSyncDelayedTask(main, new KeepInventoryThread(p, armor, items));
+		 Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable()
+		    {
+		      public void run()
+		      {
+		        Packet205ClientCommand packet = new Packet205ClientCommand();
+		        packet.a = 1;
+		        ((CraftPlayer)p).getHandle().playerConnection.a(packet);
+		        if(main.getSbManager().isRedTeam(p))
 				{
 					p.teleport(main.getConfigHandler().getRedTeamConfig().getRespawnPoint());
-
-				}else{
+					main.getBarManager().setRedBar(p);
+				}else if(main.getSbManager().isBlueTeam(p)){
 					p.teleport(main.getConfigHandler().getBlueTeamConfig().getRespawnPoint());
+					main.getBarManager().setBlueBar(p);
+				}else{
+					p.teleport(p.getWorld().getSpawnLocation());
 				}
-			}
-		}
+		      }
+		    });
+	}
+	@EventHandler(priority = EventPriority.LOW)
+	public void DamageRespawn(EntityDamageEvent e)
+	{
+
 	}
 	@EventHandler(priority = EventPriority.LOW)
 	public void onDrop(PlayerDropItemEvent e)

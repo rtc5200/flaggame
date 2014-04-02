@@ -141,7 +141,6 @@ public class BarManager {
 			{
 				BarAPI.removeBar(ofp.getPlayer());
 			}
-
 		}
 	}
 	private float getRedFlagPercent()

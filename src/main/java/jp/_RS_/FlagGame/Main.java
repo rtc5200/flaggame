@@ -47,7 +47,6 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new ChatEvent(this), this);
 		getServer().getPluginManager().registerEvents(new FlagEvents(this), this);
 		getServer().getPluginManager().registerEvents(new TeamEvent(this), this);
-		//getServer().getPluginManager().registerEvents(new Waiting(this), this);
 	}
 	public SbManager getSbManager()
 	{
